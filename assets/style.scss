@@ -1,0 +1,45 @@
+// Put your SCSS here.
+.turnstile-widget-container {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid var(--mainBorderColor);
+  border-radius: 4px;
+  background-color: var(--mainBackgroundColor);
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--mainForegroundColor);
+  }
+
+  #turnstile-widget {
+    margin: 0 auto;
+    max-width: 300px;
+  }
+}
+
+// エラー状態のスタイル
+.turnstile-error {
+  .turnstile-widget-container {
+    border-color: var(--mainColorError);
+    background-color: rgba(255, 0, 0, 0.05);
+  }
+
+  .error-message {
+    color: var(--mainColorError);
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}
+
+// ダークモード対応
+@media (prefers-color-scheme: dark) {
+  .turnstile-widget-container {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
