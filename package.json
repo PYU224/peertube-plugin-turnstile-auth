@@ -16,26 +16,28 @@
   "clientScripts": [
     {
       "script": "dist/client/register.js",
-      "scopes": ["signup"]
+      "scopes": [
+        "signup"
+      ]
     }
   ],
   "css": [
     "dist/client/style.css"
   ],
   "devDependencies": {
+    "@peertube/peertube-types": "^7.2.3",
     "@types/node": "^18.0.0",
-    "@types/peertube-types": "^4.2.0",
     "esbuild": "^0.17.0",
-    "typescript": "^5.0.0",
-    "sass": "^1.62.0"
+    "rimraf": "^5.0.0",
+    "sass": "^1.62.0",
+    "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "npm run build:server && npm run build:client",
-    "build:server": "tsc -p server/tsconfig.json",
-    "build:client": "npm run build:client:js && npm run build:client:css",
-    "build:client:js": "esbuild client/register.ts --bundle --outfile=dist/client/register.js --format=iife --target=es2017",
-    "build:client:css": "sass client/style.scss dist/client/style.css",
-    "clean": "rm -rf dist",
+    "build": "npm run build:server && npm run build:client && npm run build:css",
+    "build:server": "npx tsc -p server/tsconfig.json",
+    "build:client": "npx esbuild client/register.ts --bundle --outfile=dist/client/register.js --format=iife --target=es2017",
+    "build:css": "npx sass assets/style.scss assets/style.css",
+    "clean": "npx rimraf dist assets/style.css",
     "prepare": "npm run build"
   }
 }

@@ -1,0 +1,38 @@
+.turnstile-widget-container {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid var(--mainBorderColor);
+  border-radius: 4px;
+  background-color: var(--mainBackgroundColor);
+}
+.turnstile-widget-container .form-group {
+  margin-bottom: 0;
+}
+.turnstile-widget-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--mainForegroundColor);
+}
+.turnstile-widget-container #turnstile-widget {
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+.turnstile-error .turnstile-widget-container {
+  border-color: var(--mainColorError);
+  background-color: rgba(255, 0, 0, 0.05);
+}
+.turnstile-error .error-message {
+  color: var(--mainColorError);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .turnstile-widget-container {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

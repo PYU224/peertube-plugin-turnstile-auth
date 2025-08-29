@@ -11,7 +11,8 @@ async function register({
   registerSetting,
   registerHook,
   storageManager,
-  peertubeHelpers
+  peertubeHelpers,
+  settingsManager
 }: RegisterServerOptions) {
   
   const logger = peertubeHelpers.logger
@@ -42,11 +43,15 @@ async function register({
     private: false
   } as RegisterServerSettingOptions)
 
-  // 登録前のフックを登録
+  // settingsManagerを変数に保存してフック内で使用
+  const getSettings = settingsManager.getSettings.bind(settingsManager)
+
+  // 登録前のフックを登録 - handlerの型を any に
   registerHook({
     target: 'filter:api.user.signup.allowed.result',
-    handler: async (result: any, params: any) => {
-      const settings = await peertubeHelpers.settingsManager.getSettings([
+    handler: (async (result: any, params: any) => {
+      // 保存したgetSettings関数を使用
+      const settings = await getSettings([
         'turnstile-enabled',
         'turnstile-secret-key'
       ])
@@ -57,7 +62,7 @@ async function register({
       }
 
       const secretKey = settings['turnstile-secret-key']
-      if (!secretKey) {
+      if (!secretKey || typeof secretKey !== 'string') {
         logger.error('Turnstile secret key is not configured')
         return {
           allowed: false,
@@ -79,7 +84,7 @@ async function register({
         // Cloudflare APIでトークンを検証
         const verifyResponse = await verifyTurnstileToken(
           turnstileToken,
-          secretKey,
+          secretKey as string,  // 型アサーション
           params?.ip
         )
 
@@ -101,7 +106,7 @@ async function register({
           errorMessage: 'Error during verification. Please try again.'
         }
       }
-    }
+    }) as any  // 型を any にキャスト
   })
 }
 
